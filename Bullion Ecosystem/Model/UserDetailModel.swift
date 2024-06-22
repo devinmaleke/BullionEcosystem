@@ -6,3 +6,28 @@
 //
 
 import Foundation
+
+struct UserDetailModel: Decodable{
+    let _id: String
+    let first_name: String
+    let last_name: String
+    let gender: String
+    let date_of_birth: String
+    let email: String
+    let photo: String
+    let phone: String
+    let address: String
+    
+    init(_id: String, first_name: String, last_name: String, gender: String, date_of_birth: String, email: String, photo: String, phone: String, address: String) {
+        self._id = _id
+        self.first_name = first_name
+        self.last_name = last_name
+        self.gender = gender
+        self.date_of_birth = date_of_birth
+        self.email = email
+        self.photo = photo
+        self.phone = phone
+        self.address = address
+    }
+
+}

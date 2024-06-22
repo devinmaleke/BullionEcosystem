@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct ErrorResponse: Codable, LocalizedError {
+    let err_code: String
+    let err_message: String
+    let err_message_en: String
+}
