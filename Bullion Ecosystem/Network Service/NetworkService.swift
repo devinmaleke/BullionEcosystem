@@ -156,12 +156,11 @@ class NetworkingService{
             body.append("\(value)\r\n".data(using: .utf8)!)
         }
         
-        // Append photo if provided
         if let photoURL = photoURL {
             do {
                 let photoData = try Data(contentsOf: photoURL)
                 let filename = photoURL.lastPathComponent
-                let mimetype = "image/jpeg" // Adjust according to your file type
+                let mimetype = "image/jpeg"
                 
                 body.append("--\(boundary)\r\n".data(using: .utf8)!)
                 body.append("Content-Disposition: form-data; name=\"photo\"; filename=\"\(filename)\"\r\n".data(using: .utf8)!)

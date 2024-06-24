@@ -176,8 +176,8 @@
 			children = (
 				534D3E622C25F25C00F80AAE /* Network Service */,
 				53DFE6642C25700D007C0B07 /* Others */,
-				53DFE65E2C256A53007C0B07 /* View Model */,
 				53DFE65D2C256A50007C0B07 /* View */,
+				53DFE65E2C256A53007C0B07 /* View Model */,
 				53DFE65C2C256A4D007C0B07 /* Model */,
 				53DFE6482C2569E2007C0B07 /* AppDelegate.swift */,
 				53DFE64A2C2569E2007C0B07 /* SceneDelegate.swift */,
