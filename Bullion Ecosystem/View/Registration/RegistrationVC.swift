@@ -197,9 +197,6 @@ class RegistrationVC: UIViewController {
         if nameComponents.count > 2 {
             firstName = nameComponents.dropLast().joined(separator: " ")
         }
-        
-        print(firstName)
-        print(lastName)
         guard
             !gender.isNilOrEmpty
         else{

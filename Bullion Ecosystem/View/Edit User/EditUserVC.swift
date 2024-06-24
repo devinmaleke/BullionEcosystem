@@ -146,7 +146,6 @@ class EditUserVC: UIViewController {
         }
         
         let imageFilename = Functions.convertUTF64ToImage(stringIMG: data?.photo ?? "")
-        print(imageFilename)
         
         photoProfileButton.layer.cornerRadius = 20
         photoProfileButton.layer.borderWidth = 1
@@ -179,9 +178,6 @@ class EditUserVC: UIViewController {
         if nameComponents.count > 2 {
             firstName = nameComponents.dropLast().joined(separator: " ")
         }
-        
-        print(firstName)
-        print(lastName)
         
         guard
             !gender.isNilOrEmpty
