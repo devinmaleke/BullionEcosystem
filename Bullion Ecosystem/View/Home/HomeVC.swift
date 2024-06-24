@@ -20,6 +20,8 @@ class HomeVC: UIViewController {
     private lazy var viewModel = HomeVM()
     private lazy var userList = [UserModel]()
     var imageBannerData = ["BannerHome","BannerHome","BannerHome"]
+    private let refreshControl = UIRefreshControl()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -71,16 +73,21 @@ class HomeVC: UIViewController {
         tableView.separatorStyle = .none
         tableView.showsHorizontalScrollIndicator = false
         tableView.showsVerticalScrollIndicator = false
+        tableView.addSubview(refreshControl)
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
         
         tableView.register(UINib(nibName: "UserTVC", bundle: nil), forCellReuseIdentifier: "UserTVC")
     }
     
     private func getUserList(){
         showLoading(true)
-        viewModel.getUserList()
+        viewModel.resetData()
+        viewModel.getUserListPaging()
         { [weak self] message, success, data in
             guard let self = self else {return}
             showLoading(false)
+            refreshControl.endRefreshing()
             if success {
                 userList = data ?? []
                 tableView.reloadData()
@@ -89,6 +96,27 @@ class HomeVC: UIViewController {
             }
            
         }
+    }
+    
+    private func getMoreList(){
+        showLoading(true)
+        viewModel.getUserListPaging()
+        { [weak self] message, success, data in
+            guard let self = self else {return}
+            showLoading(false)
+            refreshControl.endRefreshing()
+            if success {
+                userList = data ?? []
+                tableView.reloadData()
+            }else{
+                showToast(message: message ?? "unkown error")
+            }
+           
+        }
+    }
+    
+    @objc func refresh(_ sender: AnyObject) {
+        getUserList()
     }
     
     private func logout(){
@@ -147,6 +175,17 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource{
             self?.getUserList()
         }
         present(vc, animated: true)
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        guard scrollView.contentOffset.y >= 0 else { return }
+        
+        let currentOffset = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+        
+        if maximumOffset - currentOffset < 125{
+            getMoreList()
+        }
     }
 }
 
